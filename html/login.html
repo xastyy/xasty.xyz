@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+	<link rel="stylesheet" href="terminal.css" />
+        <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.2/dist/terminal.min.css" />
+        <link rel="stylesheet" href="dark_mode.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	</head>
+    <body class="terminal">
+        <div class="container">
+        <div class="terminal-nav">
+            <div class="terminal-logo">
+                 <div class="logo terminal-prompt"><a href="." class="no-style">xasty <3</a></div>
+            </div>
+            <nav class="terminal-menu">
+                <ul>
+                    <li><a class="menu-item" href=".">Home</a></li>
+                    <li><a class="menu-item" href="about.html">About</a></li>
+                    <li><a class="menu-item active" href="#">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container">
+            <h1>Please login!</h1>
+            <form action="/bin/login" method="post">
+                <fieldset>
+                    <legend>Login to private space</legend>
+                    <div class="form-group">
+                        <label for="pswd">Password:</label>
+                        <input type="password" placeholder="please enter the password" name="pswd" required>
+                    </div>
+                    <button class="btn btn-default" type="submit">Login</button>
+                </fieldset>
+            </form>
+        </div>
+    </body>

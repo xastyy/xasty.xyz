@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Installing Xorg, dwm & st on Arch + patching</title>
+	<link rel="stylesheet" href="../terminal.css" />
+        <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.2/dist/terminal.min.css" />
+        <link rel="stylesheet" href="../dark_mode.css" />
+	</head>
+    <body class="terminal">
+        <div class="container">
+        <div class="terminal-nav">
+            <div class="terminal-logo">
+                 <div class="logo terminal-prompt"><a href="../" class="no-style">xasty <3</a></div>
+            </div>
+            <nav class="terminal-menu">
+                <ul>
+                    <li><a class="menu-item" href="../">Home</a></li>
+                    <li><a class="menu-item" href="../about.html">About</a></li>
+                    <li><a class="menu-item" href="../login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container">
+            <h1 id="heading">Installing Xorg, dwm & st on Arch + patching</h1>
+            <div id="content">
+                In this blog post i will show you how easy it is to get a little suckless suite up and running.
+                We will install Xorg, the display server. Dwm, a tiling window manager and st, a terminal emulator. Afterwards we will also patch them to get extra features.
+                <br>
+                Starting with Xorg we will need to install the packages <b>xorg xorg-server xorg-apps xorg-xinit</b> and <b>xterm</b> (for testing only).
+                After installing all the packages we should be able to run the <code>startx</code> command and see the following screen with three terminals:
+                <img src="../pics/01-startx.png" alt="three white terminals">
+                Now simply write exit and hit enter to get back into the tty. Nice first step done, we got a display server!
+                <br>
+                Next up is dwm and st. First we need to clone them from the officall repositories with git. If git is not installed on your system you can just download the package <b>git</b>.
+                Once you have git installed create a folder where you want to store the source code of your window manager and terminal. I'll call it <i>.suckless</i> and then let's change into that directory.
+                Now it's time to clone the repositories. Simply type <code>git clone git://git.suckless.org/dwm</code> and <code>git clone git://git.suckless.org/st</code>.
+                Also install <b>dmenu</b> and the font family <b>ttf-liberation</b> with pacman.
+                Afterwards swtich in the dwm directory and do a <code>sudo make clean install</code>. Do the same for st.
+                Now edit or create the file <code>.xinitrc</code> and add a line with <i>dwm</i>. Now you can use <code>startx</code> to start the display server and dwm.
+                Use ALT+SHIFT+ENTER to run st. For a list of all the default keybindings check the config.h or go to <a src"https://gist.github.com/erlendaakre/12eb90eef84a3ab81f7b531e516c9594">this</a> cheatsheet.
+                <img src="../pics/01-dwm+st.png" alt="dwm with st open">
+                Great now the barebones is installed and ready to go! Now let's get to patching. First we'll enable scrolling for our terminal.
+                Go to <a src="https://st.suckless.org/patches/scrollback/"> the patches site on suckless</a> and download the newest version of st-scrollback. Save the .diff file into your st folder. Then use <code>patch --merge -i st-scrollback-x.x.x.diff</code> to patch st.
+                Now just do <code>sudo make clean install</code> again.
+                <img src="../pics/01-st_patch.png">
+                Congrats, you have successfully patched st. Now you can scroll with SHIFT+PageUp/PageDown after restarting st.
+                <br>
+                Now let us patch dwm aswell. We will add the <a src="https://dwm.suckless.org/patches/actualfullscreen/">actuallfullscreen</a> patch. Again save the .diff into the dwm folder and patch it just like we did with st. After making you will see the following warning:
+                <img src="../pics/01-dwm_warning.png">
+                Now we have to edit the <i>config.h</i> file.
+                Add the line<br><code> { MODKEY, XK_k, togglefullscr, {0} },</code><br>
+                to <code>keys[]</code>.
+                It should look something like this: (i added it in the middle)
+                <img src="../pics/01-configh_fullscr.png">
+                Finally recompile with a <code>sudo make clean install</code> and restart dwm (use ALT+SHIFT+Q to quit dwm and then run <code>startx</code>).
+                Now you can toggle fullscreen with ALT+k.
+                <br><br>
+                Thats it for this blog post! I hope i could help with getting you started with suckless software. Now it's up to you to switch up the keybindings and customize more!<br>
+                I might make another entry for customization options such as fonts, the statusbar or how to launch software with a keybinding! So stay tuned!
+
+
+
+            </div>
+        </div>
+    </body>

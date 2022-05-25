@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>xasty <3</title>
+	<link rel="stylesheet" href="https://xasty.xyz/terminal.css" />
+        <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.2/dist/terminal.min.css" />
+        <link rel="stylesheet" href="https://xasty.xyz/dark_mode.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            function create_rows(jsondata, key) {
+                let res = "<tbody>";
+		let count = 0;
+                Object.keys(jsondata[key]).forEach(t => {
+                    res += "<tr><td>" + t + "</td><td>" + jsondata[key][t][0] + "</td><td>" + jsondata[key][t][1] + "</td></tr>";
+		    count++;
+                });
+                res += "<tr><td>" + count + "</td></tr></tbody>";
+                return res; 
+            };
+            $.getJSON("https://xasty.xyz/smokes.json", data => {
+                Object.keys(data).reverse().forEach(d => {
+                                $("#tables").append($('<table><caption>' + d + '</caption><thead><tr><th>Time</th><th>Situation</th><th>Importance</th></tr></thead></table>')
+                                                .append(create_rows(data, d)));
+                });
+            });
+        </script>
+	</head>
+    <body class="terminal">
+        <div class="container">
+        <div class="terminal-nav">
+            <div class="terminal-logo">
+                 <div class="logo terminal-prompt"><a href="https://xasty.xyz/" class="no-style">xasty <3</a></div>
+            </div>
+            <nav class="terminal-menu">
+                <ul>
+                    <li><a class="menu-item" href="https://xasty.xyz/">Home</a></li>
+                    <li><a class="menu-item" href="https://xasty.xyz/about.html">About</a></li>
+                    <li><a class="menu-item active" href="#">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container">
+            <h1>Welcome Home xasty!</h1>
+            <form action="/bin/smokes" method="post">
+                <fieldset>
+                    <legend>Add smoke</legend>
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select name="type">
+                            <option value="a">Spannung</option>
+                            <option value="b">Müdigkeit</option>
+                            <option value="c">Langeweile</option>
+                            <option value="d">Konzentration</option>
+                            <option value="e">Ritual</option>
+                            <option value="f">Einsamkeit</option>
+                            <option value="g">in Gesellschaft</option>
+                            <option value="h">schlechte Stimmung</option>
+                            <option value="i">gute Stimmung</option>
+                            <option value="j">Gier</option>
+                            <option value="k">andere</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="importance">Importance</label>
+                        <select name="importance">
+                            <option value="1">unwichtig</option>
+                            <option value="2">etwas</option>
+                            <option value="3">dringend</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-default" type="submit">Add</button>
+                </fieldset>
+            </form>
+            <div id="tables">
+                        </div>
+                
+        </div>
+    </body>
